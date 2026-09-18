@@ -1,0 +1,50 @@
+name: NodeConsole
+options:
+  bundleIdPrefix: com.zerdge.nodeconsole
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+packages:
+  NodeJSIOS:
+    url: https://github.com/kewlbear/nodejs-ios.git
+    branch: main
+
+targets:
+  NodeConsole:
+    type: application
+    platform: iOS
+    sources:
+      - path: NodeConsole/App
+    resources:
+      - path: NodeConsole/Resources/nodejs-project
+      - path: NodeConsole/Assets.xcassets
+    dependencies:
+      - package: NodeJSIOS
+        product: nodejs-ios
+    info:
+      path: NodeConsole/Resources/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        CFBundleDisplayName: Node Console
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
+    entitlements:
+      path: NodeConsole/Resources/NodeConsole.entitlements
+      properties:
+        com.apple.security.cs.allow-jit: true
+        get-task-allow: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.nodeconsole
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ENABLE_BITCODE: false
+        CODE_SIGN_ENTITLEMENTS: NodeConsole/Resources/NodeConsole.entitlements
+        IPHONEOS_DEPLOYMENT_TARGET: "16.0"
