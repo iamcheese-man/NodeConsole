@@ -1,0 +1,8 @@
+{
+  "name": "node-console-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend script run by the embedded nodejs-mobile engine inside NodeConsole.app",
+  "main": "main.js",
+  "dependencies": {}
+}
