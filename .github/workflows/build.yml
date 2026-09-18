@@ -1,0 +1,50 @@
+name: Build NodeConsole IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Resolve Swift Package dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project NodeConsole.xcodeproj \
+            -scheme NodeConsole
+
+      - name: Build unsigned .app for a real device
+        run: |
+          xcodebuild archive \
+            -project NodeConsole.xcodeproj \
+            -scheme NodeConsole \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath build/NodeConsole.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES
+
+      - name: Package as .ipa
+        run: |
+          mkdir -p Payload
+          cp -r build/NodeConsole.xcarchive/Products/Applications/NodeConsole.app Payload/
+          zip -r NodeConsole.ipa Payload
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NodeConsole-unsigned
+          path: NodeConsole.ipa
