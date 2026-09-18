@@ -2,7 +2,7 @@ name: NodeConsole
 options:
   bundleIdPrefix: com.zerdge
   deploymentTarget:
-    iOS: "16.0"
+    iOS: "17.0"
   createIntermediateGroups: true
 
 packages:
