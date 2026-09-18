@@ -1,6 +1,6 @@
 name: NodeConsole
 options:
-  bundleIdPrefix: com.zerdge.nodeconsole
+  bundleIdPrefix: com.zerdge
   deploymentTarget:
     iOS: "16.0"
   createIntermediateGroups: true
@@ -42,7 +42,7 @@ targets:
         get-task-allow: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.nodeconsole
+        PRODUCT_BUNDLE_IDENTIFIER: com.zerdge.nodeconsole
         SWIFT_VERSION: "5.0"
         TARGETED_DEVICE_FAMILY: "1,2"
         ENABLE_BITCODE: false
